@@ -53,6 +53,23 @@ class BookAPI(APIView) :
         serializer = BookSerializer(book)
         return Response(serializer.data, status = status.HTTP_200_OK)
 
+class BooksAPIMixins(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView) :
+    queryset = Book.object.all()
+    serializer_class = BookSerializer
+    
+    def get(self, request, *args, **kwargs) :
+        return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
+class BookAPIMixins(mixins.RetrieveModelMixin, generics.GenericAPIView) :
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'bid'
 
+    def get(self, request, *args, **kwargs) :
+        return self.retrieve(request, *args, **kwargs)
+        
+    
     
