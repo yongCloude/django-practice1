@@ -2,6 +2,7 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from rest_framework.generics import get_object_or_404
 from .models import Book
 from .serializer_inherit import BookSerializer
 # Create your views here.
@@ -10,7 +11,7 @@ from .serializer_inherit import BookSerializer
 def HelloAPI(request) :
     return Response("hello world!")
 
-@api_ciew(['GET', 'POST'])
+@api_view(['GET', 'POST'])
 def booksAPI(request) :
     if request.method == 'GET' : 
         books = Book.objects.all()
